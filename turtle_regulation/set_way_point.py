@@ -3,6 +3,7 @@ from rclpy.node import Node
 from turtlesim.msg import Pose
 from geometry_msgs.msg import Twist
 from std_msgs.msg import Bool
+from turtle_interfaces.srv import SetWayPoint as SetWayPointSrv
 import math
 
 class SetWayPoint(Node):
@@ -20,10 +21,23 @@ class SetWayPoint(Node):
             Twist, '/turtle1/cmd_vel', 10)
         self.is_moving_pub = self.create_publisher(
             Bool, 'is_moving', 10)
+        self.srv = self.create_service(
+            SetWayPointSrv,
+            'set_waypoint_service',
+            self.set_waypoint_callback
+         )
         self.timer = self.create_timer(0.1, self.control_loop)
+        self.get_logger().info('Node started!')
 
     def pose_callback(self, msg):
         self.pose = msg
+
+    def set_waypoint_callback(self, request, response):
+        self.waypoint['x'] = request.x
+        self.waypoint['y'] = request.y
+        self.get_logger().info(f'New waypoint: ({request.x}, {request.y})')
+        response.res = True
+        return response
 
     def control_loop(self):
         if self.pose is None:
