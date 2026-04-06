@@ -26,6 +26,7 @@ setup(
         'console_scripts': [
             'set_way_point = turtle_regulation.set_way_point:main',
             'waypoint_client = turtle_regulation.waypoint_client:main',
+            'square_client = turtle_regulation.square_client:main',
         ],
     },
 )

@@ -11,8 +11,8 @@ class SetWayPoint(Node):
         super().__init__('set_way_point')
         self.pose = None
         self.waypoint = {'x': 7.0, 'y': 7.0}
-        self.Kp = 2.0
-        self.Kpl = 1.5
+        self.Kp = 4.0
+        self.Kpl = 0.3
         self.distance_tolerance = 0.2
 
         self.pose_sub = self.create_subscription(
